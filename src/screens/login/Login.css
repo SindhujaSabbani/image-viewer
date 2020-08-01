@@ -1,0 +1,38 @@
+.login-container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 10px;
+
+}
+.login {
+    width: 30%;
+}
+.title {
+    font-size: x-large;
+    padding-bottom: 10px;
+}
+
+.dispNone{
+    display:none;
+}
+
+.dispBlock {
+    display: block;
+}
+
+.red
+{
+    color: red;
+}
+
+.username {
+    width: 100%;
+}
+
+.password {
+    width: 100%;
+}
+.login-btn {
+}

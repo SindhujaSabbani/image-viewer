@@ -6,8 +6,8 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 class Controller extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
     }
 
     render() {
