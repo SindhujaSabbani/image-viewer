@@ -2,47 +2,14 @@ import React, {Component} from 'react';
 import './Login.css';
 import '../../common/common.css';
 import Header from '../../common/header/Header';
-import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-
-const styles = theme => ({
-    root: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper
-    },
-    upcomingMoviesHeading: {
-        textAlign: 'center',
-        background: '#ff9999',
-        padding: '8px',
-        fontSize: '1rem'
-    },
-    gridListUpcomingMovies: {
-        flexWrap: 'nowrap',
-        transform: 'translateZ(0)',
-        width: '100%'
-    },
-    gridListMain: {
-
-        transform: 'translateZ(0)',
-        cursor: 'pointer'
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-        minWidth: 240,
-    },
-    title: {
-        color: theme.palette.primary.light,
-    }
-});
 
 class Login extends Component {
     constructor() {
@@ -53,7 +20,6 @@ class Login extends Component {
             usernameRequired: "dispNone",
             password: "",
             passwordRequired: "dispNone",
-            registrationSuccess: false,
             loggedIn: sessionStorage.getItem('access-token') == null ? false : true,
             invalidLogin: "dispNone"
         };
@@ -81,7 +47,7 @@ class Login extends Component {
 
         let username = "user";
         let password = "password";
-        let accesstoken = "";
+        let accesstoken = "IGQVJXd0dKZA2JQX0pJV1RvT2VRR05JT0UxcGdhLUhyaHNyMkFRZA2NzVHRCd3ZAJSERVT0dMdjgtZAUQzOXJ3T1ZAKUFNiRTlzcXdzaFpVa0dHOERQVlNnemdDY2t0OVlpc2ZAVczNoWjZAUZAzdYZAFU4N2lYLQZDZD";
 
 
         if (this.state.username == username && this.state.password == password) {

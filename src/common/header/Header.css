@@ -2,10 +2,33 @@
     flex-direction: row;
     background-color: #263238;
     width: 100%;
+    justify-content: space-between;
 }
 
 .logo {
     color: #fff;
     font-size: 18px;
     padding: 10px;
+
+}
+
+.search-box-show {
+    display: flex;
+    flex-direction: row;
+    visibility: visible;
+}
+
+.search-box-none {
+    display: flex;
+    flex-direction: row;
+    visibility: hidden;
+}
+
+.search {
+    display: flex;
+    border-radius: 4px;
+    width: 300px;
+    background-color: #c0c0c0;
+    margin: 5px;
+    align-content: baseline;
 }
