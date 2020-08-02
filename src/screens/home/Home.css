@@ -1,0 +1,30 @@
+.postlist {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.image {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    width: 500px;
+    height: auto;
+}
+
+.card {
+    margin: 10px;
+}
+
+.comment {
+    width: 100%;
+}
+.comment-container {
+    display: flex;
+    flex-direction: row;
+}
+.add-button {
+    margin-left: 5px;
+}
