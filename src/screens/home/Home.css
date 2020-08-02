@@ -21,6 +21,11 @@
 .comment {
     width: 100%;
 }
+
+.comments {
+    display: flex;
+    flex-direction: row;
+}
 .comment-container {
     display: flex;
     flex-direction: row;

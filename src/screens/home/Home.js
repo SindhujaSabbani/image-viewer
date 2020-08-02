@@ -39,6 +39,7 @@ class Home extends Component {
                                 let cap_tags = element.caption.split("\n");
                                 result.caption = cap_tags[0];
                                 result.tags = cap_tags[1];
+                                result.comments = [];
                                 result.timestamp = new Date(result.timestamp).toLocaleString();
                                 post_data.push(result);
                                 this.setState({
@@ -70,14 +71,15 @@ class Home extends Component {
 
     onSearchTextChange = (keyword) => {
         if (keyword == "") {
-            this.setState({post_data:this.state.post_data_orig});
+            this.setState({post_data: this.state.post_data_orig});
         } else {
             let post_data = [];
             this.state.post_data_orig.forEach((element) => {
                 let caption = element.caption.toLowerCase();
                 if (caption.includes(keyword)) {
                     post_data.push(element);
-                }});
+                }
+            });
             this.setState({post_data: post_data});
         }
     }
@@ -96,6 +98,23 @@ class Home extends Component {
                 } else {
                     post_data[i].likes_count--;
                 }
+                break;
+            }
+        }
+        this.setState({post_data: post_data});
+    }
+
+    handleAddComment = (image_id) => {
+        let post_data = this.state.post_data_orig;
+        let i = 0;
+        for (; i < post_data.length; i++) {
+            if (post_data[i].id == image_id) {
+                let input_text = document.getElementById("imagecomment" + image_id);
+                if (input_text) {
+                    post_data[i].comments.push(input_text.value);
+                    input_text.value = "";
+                }
+                break;
             }
         }
         this.setState({post_data: post_data});
@@ -138,22 +157,27 @@ class Home extends Component {
                                 </div>
 
                                 <br/><br/>
-                                <FormControl>
-                                    <FormHelperText className={this.state.addComment}>
-                                        <div><Typography>: {this.state.addedComment}</Typography></div>
-                                    </FormHelperText>
-                                </FormControl>
+                                {image.comments.map(comment => (
+                                    <div className="comments">
+                                        <Typography style={{fontWeight: 'bold'}}>
+                                            {image.username}:
+                                        </Typography>
+                                        <Typography>
+                                            {comment}
+                                        </Typography>
+                                    </div>
+                                ))}
+
                                 <br/>
                                 <br/>
                                 <div className="comment-container">
                                     <FormControl className="comment">
-                                        <InputLabel htmlFor="imagecomment">Add a Comment</InputLabel>
-                                        <Input id="imagecomment" type="text"
-                                               onChange={this.imageCommentOnChangeChangeHandler}/>
+                                            <InputLabel htmlFor={"imagecomment" + image.id}>Add a Comment</InputLabel>
+                                        <Input id={"imagecomment" + image.id} type="text"/>
                                     </FormControl>
                                     <div className="add-button"></div>
                                     <Button id="addedcomment" variant="contained" color="primary"
-                                            onClick={this.addCommentOnClickHandler}>ADD</Button>
+                                            onClick={() => this.handleAddComment(image.id)}>ADD</Button>
                                 </div>
 
                             </CardContent>
