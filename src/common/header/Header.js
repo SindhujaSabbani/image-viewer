@@ -72,7 +72,7 @@ class Header extends Component {
                         anchorEl={this.getProfileButton}
                         getContentAnchorEl={null}
                         anchorOrigin={{
-                            vertical: 'bottom',
+                            vertical: 'top',
                             horizontal: 'right',
                         }}
                         transformOrigin={{
