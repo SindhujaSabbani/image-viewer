@@ -39,7 +39,11 @@ class Header extends Component {
         this.setState({menuOpen: false})
         sessionStorage.removeItem("access-token");
     }
-
+    handleLoginStatus = () => {
+        if (sessionStorage.getItem("access-token") == null) {
+            return <Redirect to = "/"/>;
+        }
+    }
 
     handleClose = () => {
         this.setState({menuOpen: false})
@@ -48,6 +52,7 @@ class Header extends Component {
     render() {
         return (
             <div className="flex-container header">
+                {this.handleLoginStatus()}
                 <div className="logo">Image Viewer</div>
                 <div className={this.state.searchBox}>
                     <div className="search">
