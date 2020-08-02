@@ -32,7 +32,6 @@ class Home extends Component {
         fetch(media_url)
             .then(res => res.json())
             .then((result) => {
-                    console.log(result);
                     result.data.forEach(element => {
                         fetch(post_url_prefix + element.id + post_url_postfix)
                             .then(res => res.json())
@@ -83,6 +82,25 @@ class Home extends Component {
         }
     }
 
+    handleLikeButton = (image_id) => {
+        let post_data = this.state.post_data_orig;
+        let i = 0;
+        for (; i < post_data.length; i++) {
+            if (post_data[i].id == image_id) {
+                post_data[i].liked = !post_data[i].liked;
+                if (!post_data[i].likes_count) {
+                    post_data[i].likes_count = 0;
+                }
+                if (post_data[i].liked) {
+                    post_data[i].likes_count++;
+                } else {
+                    post_data[i].likes_count--;
+                }
+            }
+        }
+        this.setState({post_data: post_data});
+    }
+
     render() {
         return (
             <div>
@@ -109,13 +127,16 @@ class Home extends Component {
                                 <Typography color='primary'>
                                     {image.tags}
                                 </Typography>
-                                <IconButton className="like-button" aria-label="like-button"
-                                            onClick={() => this.likeBtnHandler(image.id)}>
-                                    {/* Based on the condition of the icon will be filled red or only the border */}
-                                    {image.user_has_liked ?
-                                        <FavoriteIcon className="image-liked-icon" fontSize="large"/> :
-                                        <FavoriteBorderIcon className="image-like-icon" fontSize="large"/>}
-                                </IconButton>
+                                <div>
+                                    <IconButton className="like-button" aria-label="like-button"
+                                                onClick={() => this.handleLikeButton(image.id)}>
+                                        {image.liked ?
+                                            <FavoriteIcon color="secondary" fontSize="large"/> :
+                                            <FavoriteBorderIcon fontSize="large"/>}
+                                    </IconButton>
+                                    {(image.likes_count && image.likes_count > 0) ? image.likes_count + " Likes" : ""}
+                                </div>
+
                                 <br/><br/>
                                 <FormControl>
                                     <FormHelperText className={this.state.addComment}>

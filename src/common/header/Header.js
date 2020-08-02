@@ -15,8 +15,6 @@ class Header extends Component {
 
     constructor() {
         super();
-
-        console.log("xx" + sessionStorage.getItem('access-token') + "xx")
         this.state = {
             menuOpen: false,
             searchBox: sessionStorage.getItem('access-token') == null ? "search-box-none" : "search-box-show"
