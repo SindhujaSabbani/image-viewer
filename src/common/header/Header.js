@@ -49,6 +49,10 @@ class Header extends Component {
         this.setState({menuOpen: false})
     }
 
+    handleSearchTextChange = (event) => {
+        this.props.onSearchTextChange(event.target.value);
+    }
+
     render() {
         return (
             <div className="flex-container header">
@@ -57,7 +61,8 @@ class Header extends Component {
                 <div className={this.state.searchBox}>
                     <div className="search">
                         <SearchIcon></SearchIcon>
-                        <Input id="search" placeholder='Search...' type="text" disableUnderline={true}/>
+                        <Input id="search" placeholder='Search...' type="text" disableUnderline={true}
+                         onChange={this.handleSearchTextChange}/>
                     </div>
                     <IconButton id="profile-icon">
                         <Avatar src='batmanprofile.jpg' onClick={this.handleOpenMenu}/>

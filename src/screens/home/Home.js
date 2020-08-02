@@ -42,7 +42,10 @@ class Home extends Component {
                                 result.tags = cap_tags[1];
                                 result.timestamp = new Date(result.timestamp).toLocaleString();
                                 post_data.push(result);
-                                this.setState({post_data: post_data})
+                                this.setState({
+                                    post_data_orig: post_data,
+                                    post_data: post_data
+                                })
                             });
                     });
                 },
@@ -66,10 +69,24 @@ class Home extends Component {
 
     }
 
+    onSearchTextChange = (keyword) => {
+        if (keyword == "") {
+            this.setState({post_data:this.state.post_data_orig});
+        } else {
+            let post_data = [];
+            this.state.post_data_orig.forEach((element) => {
+                let caption = element.caption.toLowerCase();
+                if (caption.includes(keyword)) {
+                    post_data.push(element);
+                }});
+            this.setState({post_data: post_data});
+        }
+    }
+
     render() {
         return (
             <div>
-                <Header/>
+                <Header onSearchTextChange={this.onSearchTextChange}/>
                 <div className="postlist">
 
 
