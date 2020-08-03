@@ -59,19 +59,26 @@ function getPostData() {
     return post_data;
 }
 
+function  updatePostLike(post) {
+    post.liked = !post.liked;
+    if (!post.likes_count) {
+        post.likes_count = 0;
+    }
+    if (post.liked) {
+        post.likes_count++;
+    } else {
+        post.likes_count--;
+    }
+}
 function updateLike(component, image_id) {
     let post_data = getPostData();
     let i = 0;
     for (; i < post_data.length; i++) {
         if (post_data[i].id === image_id) {
-            post_data[i].liked = !post_data[i].liked;
-            if (!post_data[i].likes_count) {
-                post_data[i].likes_count = 0;
-            }
-            if (post_data[i].liked) {
-                post_data[i].likes_count++;
-            } else {
-                post_data[i].likes_count--;
+            let post = component.state.image;
+            if (post != null) {
+                updatePostLike(post);
+                updatePostLike(post_data[i]);
             }
             break;
         }
@@ -87,6 +94,9 @@ function updateComment(component, input_text, image_id) {
         if (post_data[i].id === image_id) {
             if (input_text) {
                 post_data[i].comments.push(input_text.value);
+                if (component.state.image != null) {
+                    component.state.image.comments.push(input_text.value);
+                }
                 input_text.value = "";
             }
             break;

@@ -89,7 +89,7 @@ class Header extends Component {
 
                         {this.props.showProfileLink != false ?
                             <MenuItem component={Link} to='/profile'
-                                      onClick={this.handleMyAccount}>My account</MenuItem>
+                                      onClick={this.handleMyAccount}>My Account</MenuItem>
                             :""}
                         {this.props.showProfileLink != false ? <hr/>:""}
 

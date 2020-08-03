@@ -112,9 +112,14 @@
     flex-direction: column;
     width: 50%;
     height: auto;
+    align-content: space-between;
 }
 
 .modal-image {
     width: 50%;
     height: 50%;
+}
+.comment-container {
+    display: flex;
+    align-items: flex-end;
 }

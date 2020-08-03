@@ -62,6 +62,7 @@ class Home extends Component {
     }
 
     render() {
+
         return (
             <div>
                 <Header onSearchTextChange={this.onSearchTextChange}/>
@@ -71,8 +72,8 @@ class Home extends Component {
                         <Card className="card">
                             <CardHeader
                                 avatar={
-                                    <Avatar>
-                                        <img src='batmanprofile.jpg' alt="batman"/>
+                                    <Avatar >
+                                        <img src='batmanprofile.jpg'/>
                                     </Avatar>
                                 }
                                 title={image.username}

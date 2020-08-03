@@ -32,8 +32,8 @@ class Profile extends Component {
         this.state = {
             post_data: [],
             posts_count: 0,
-            following_count: 5,
-            followers_count: 5,
+            following_count: 3,
+            followers_count: 10,
             fullname: "Sindhuja Sabbani",
             handle: "sindhuja_sabbani",
             editModalOpen: false,
