@@ -78,8 +78,8 @@ function updateLike(component, image_id) {
             let post = component.state.image;
             if (post != null) {
                 updatePostLike(post);
-                updatePostLike(post_data[i]);
             }
+            updatePostLike(post_data[i]);
             break;
         }
     }
