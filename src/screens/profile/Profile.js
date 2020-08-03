@@ -96,9 +96,6 @@ class Profile extends Component {
 
     handleLikeButton = (image_id) => {
         updateLike(this, image_id);
-        let post_data = getPostData();
-        this.setState({post_data:post_data});
-        this.forceUpdate();
     }
 
     handleAddComment = (image_id) => {
