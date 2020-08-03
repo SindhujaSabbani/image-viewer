@@ -58,10 +58,12 @@ class Profile extends Component {
     }
 
     handleNameChange = (e) => {
-        this.setState({newFullname: e.target.value});
-        let fullname = this.state.newFullname;
+        let fullname = e.target.value;
+        this.setState({newFullname: fullname});
         if (fullname === "") {
             this.setState({fullnameRequired: "visible"});
+        } else {
+            this.setState({fullnameRequired: "hidden"});
         }
     }
 
