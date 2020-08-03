@@ -70,8 +70,8 @@ function  updatePostLike(post) {
         post.likes_count--;
     }
 }
-function updateLike(component, image_id) {
-    let post_data = getPostData();
+
+function updatePostsLike(component, post_data, image_id) {
     let i = 0;
     for (; i < post_data.length; i++) {
         if (post_data[i].id === image_id) {
@@ -83,27 +83,48 @@ function updateLike(component, image_id) {
             break;
         }
     }
+}
+function updateLike(component, image_id) {
+    let post_data = getPostData();
+
+    updatePostsLike(component, post_data, image_id);
     updatePostData(post_data);
-    component.setState({post_data: post_data});
+    if (component.state.post_data != null) {
+        let post_data = component.state.post_data;
+        updatePostsLike(component, post_data, image_id);
+        component.setState({post_data: post_data});
+    } else {
+        component.setState({post_data: post_data});
+    }
 }
 
-function updateComment(component, input_text, image_id) {
-    let post_data = getPostData();
+function updatePostsComment(component, post_data, comment, image_id) {
     let i = 0;
     for (; i < post_data.length; i++) {
         if (post_data[i].id === image_id) {
-            if (input_text) {
-                post_data[i].comments.push(input_text.value);
-                if (component.state.image != null) {
-                    component.state.image.comments.push(input_text.value);
-                }
-                input_text.value = "";
+            if (comment && comment != "") {
+                post_data[i].comments.push(comment);
             }
             break;
         }
     }
+}
+
+function updateComment(component, input_text, image_id) {
+    let post_data = getPostData();
+    let comment = input_text.value;
+    updatePostsComment(component, post_data, comment, image_id)
     updatePostData(post_data);
-    component.setState({post_data: post_data});
+    if (input_text) {
+        input_text.value = "";
+    }
+    if (component.state.post_data != null) {
+        let post_data = component.state.post_data;
+        updatePostsComment(component, post_data, comment, image_id);
+        component.setState({post_data: post_data});
+    } else {
+        component.setState({post_data: post_data});
+    }
 }
 
 export {
