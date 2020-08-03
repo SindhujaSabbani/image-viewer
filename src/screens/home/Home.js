@@ -42,6 +42,7 @@ class Home extends Component {
             this.setState({post_data: getPostData()});
         } else {
             let post_data = [];
+            keyword = keyword.toLowerCase();
             getPostData().forEach((element) => {
                 let caption = element.caption.toLowerCase();
                 if (caption.includes(keyword)) {
