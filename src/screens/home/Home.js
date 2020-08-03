@@ -3,16 +3,11 @@ import './Home.css';
 import Header from "../../common/header/Header";
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
-import {withStyles} from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -125,8 +120,6 @@ class Home extends Component {
             <div>
                 <Header onSearchTextChange={this.onSearchTextChange}/>
                 <div className="postlist">
-
-
                     {this.state.post_data.map(image => (
 
                         <Card className="card">
@@ -184,9 +177,7 @@ class Home extends Component {
 
                         </Card>
                     ))}
-
                 </div>
-
             </div>
         )
     }

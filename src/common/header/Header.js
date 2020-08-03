@@ -39,7 +39,7 @@ class Header extends Component {
     }
     handleLoginStatus = () => {
         if (sessionStorage.getItem("access-token") == null) {
-            return <Redirect to = "/"/>;
+            return <Redirect to="/"/>;
         }
     }
 
@@ -55,13 +55,17 @@ class Header extends Component {
         return (
             <div className="flex-container header">
                 {this.handleLoginStatus()}
-                <div className="logo">Image Viewer</div>
+                <Link className="logo" style={{textDecoration: 'none'}} to='/home'>Image Viewer</Link>
                 <div className={this.state.searchBox}>
-                    <div className="search">
-                        <SearchIcon></SearchIcon>
-                        <Input id="search" placeholder='Search...' type="text" disableUnderline={true}
-                         onChange={this.handleSearchTextChange}/>
-                    </div>
+                    {this.props.showSearch != false ?
+                        <div className="search">
+                            <SearchIcon></SearchIcon>
+                            <Input id="search" placeholder='Search...' type="text" disableUnderline={true}
+                                   onChange={this.handleSearchTextChange}/>
+                        </div>
+                        : ""
+                    }
+
                     <IconButton id="profile-icon">
                         <Avatar src='batmanprofile.jpg' onClick={this.handleOpenMenu}/>
                     </IconButton>
@@ -82,8 +86,12 @@ class Header extends Component {
                         onClose={this.handleClose}>
 
 
-                        <MenuItem component={Link} to='/profile' onClick={this.handleMyAccount}>My account</MenuItem>
-                        <hr/>
+                        {this.props.showProfileLink != false ?
+                            <MenuItem component={Link} to='/profile'
+                                      onClick={this.handleMyAccount}>My account</MenuItem>
+                            :""}
+                        {this.props.showProfileLink != false ? <hr/>:""}
+
                         <MenuItem component={Link} to='/' onClick={this.handleLogout}>Logout</MenuItem>
 
                     </Menu>
