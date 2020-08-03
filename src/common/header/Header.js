@@ -36,6 +36,7 @@ class Header extends Component {
     handleLogout = () => {
         this.setState({menuOpen: false})
         sessionStorage.removeItem("access-token");
+        sessionStorage.removeItem("post_data");
     }
     handleLoginStatus = () => {
         if (sessionStorage.getItem("access-token") == null) {

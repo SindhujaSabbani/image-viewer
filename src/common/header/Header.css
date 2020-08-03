@@ -3,6 +3,7 @@
     background-color: #263238;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
 }
 
 .logo {

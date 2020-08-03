@@ -13,6 +13,14 @@ import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import {fetchPostData, getPostData} from "../../common/common.js";
+import {updateComment, updateLike} from "../../common/common";
 
 
 class Profile extends Component {
@@ -20,51 +28,25 @@ class Profile extends Component {
 
     constructor() {
         super();
-        let media_url = "https://graph.instagram.com/me/media?fields=id,caption&access_token="
-            + sessionStorage.getItem('access-token');
-        let post_url_prefix = "https://graph.instagram.com/";
-        let post_url_postfix = "?fields=id,media_type,media_url,username,timestamp&access_token=" +
-            sessionStorage.getItem('access-token');
-        let post_data = [];
-        fetch(media_url)
-            .then(res => res.json())
-            .then((result) => {
-                    result.data.forEach(element => {
-                        fetch(post_url_prefix + element.id + post_url_postfix)
-                            .then(res => res.json())
-                            .then((result) => {
-                                let cap_tags = element.caption.split("\n");
-                                result.caption = cap_tags[0];
-                                result.tags = cap_tags[1];
-                                result.comments = [];
-                                result.timestamp = new Date(result.timestamp).toLocaleString();
-                                post_data.push(result);
-                                this.setState({
-                                    post_data: post_data,
-                                    posts_count: post_data.length
-                                })
-                            });
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            );
+
         this.state = {
-            post_data: post_data,
-            posts_count: post_data.length,
+            post_data: [],
+            posts_count: 0,
             following_count: 5,
             followers_count: 5,
             fullname: "Sindhuja Sabbani",
             handle: "sindhuja_sabbani",
             editModalOpen: false,
             fullnameRequired: "hidden",
-            newFullname: ""
+            newFullname: "",
+            imageModalId: "",
+            image: null
         };
 
+    }
+
+    componentDidMount() {
+        fetchPostData(this);
     }
 
     handleEditClose = () => {
@@ -97,6 +79,32 @@ class Profile extends Component {
         }
     }
 
+    handleImageClick = (image) => {
+
+        this.setState({
+            image: image,
+            imageModalId: image.id
+        });
+    }
+
+    handleImageClose = () => {
+        this.setState({
+            imageModalId: "",
+            image: null
+        });
+    }
+
+    handleLikeButton = (image_id) => {
+        updateLike(this, image_id);
+        let post_data = getPostData();
+        this.setState({post_data:post_data});
+        this.forceUpdate();
+    }
+
+    handleAddComment = (image_id) => {
+        let input_text = document.getElementById("imagecomment" + image_id);
+        updateComment(this, input_text, image_id);
+    }
 
     render() {
         return (
@@ -149,12 +157,74 @@ class Profile extends Component {
                 <div className="posts">
                     <GridList cellHeight={300} cols={3}>
                         {this.state.post_data.map((image) => (
-                            <GridListTile key={image.media_url} cols={image.cols || 1}>
+                            <GridListTile key={image.media_url} cols={image.cols || 1}
+                                          onClick={() => this.handleImageClick(image)}>
                                 <img src={image.media_url} alt={image.caption}/>
                             </GridListTile>
                         ))}
                     </GridList>
                 </div>
+
+                {this.state.imageModalId === "" ?
+                    "" :
+                    <Modal className="image-modal" open={this.state.imageModalId === "" ? false : true}
+                     onClose={this.handleImageClose} onBackdropClick={this.handleImageClose}>
+                        <Card className="image-modal-card">
+                            <img src={this.state.image.media_url} alt={this.state.image.caption} className="modal-image"/>
+                            <div className="image-modal-content">
+                                <CardHeader
+                                    avatar={
+                                        <Avatar >
+                                            <img src='batmanprofile.jpg' alt="batman"/>
+                                        </Avatar>
+                                    }
+                                    title={this.state.image.username}/>
+
+                                <CardContent>
+                                    <hr/>
+                                    <Typography>{this.state.image.caption}</Typography>
+                                    <Typography color='primary'>
+                                        {this.state.image.tags}
+                                    </Typography>
+                                    <div>
+                                        <IconButton className="like-button" aria-label="like-button"
+                                                    onClick={() => this.handleLikeButton(this.state.image.id)}>
+                                            {this.state.image.liked ?
+                                                <FavoriteIcon color="secondary" fontSize="large"/> :
+                                                <FavoriteBorderIcon fontSize="large"/>}
+                                        </IconButton>
+                                        {(this.state.image.likes_count && this.state.image.likes_count > 0) ? this.state.image.likes_count + " Likes" : ""}
+                                    </div>
+
+                                    <br/><br/>
+                                    {this.state.image.comments.map(comment => (
+                                        <div className="comments">
+                                            <Typography style={{fontWeight: 'bold'}}>
+                                                {this.state.image.username}:
+                                            </Typography>
+                                            <Typography>
+                                                {comment}
+                                            </Typography>
+                                        </div>
+                                    ))}
+                                    <br/>
+                                    <br/>
+                                    <div className="comment-container">
+                                        <FormControl className="comment">
+                                            <InputLabel htmlFor={"imagecomment" + this.state.image.id}>Add a
+                                                Comment</InputLabel>
+                                            <Input id={"imagecomment" + this.state.image.id} type="text"/>
+                                        </FormControl>
+                                        <div className="add-button"></div>
+                                        <Button id="addedcomment" variant="contained" color="primary"
+                                                onClick={() => this.handleAddComment(this.state.image.id)}>ADD</Button>
+                                    </div>
+                                </CardContent>
+                            </div>
+                        </Card>
+                    </Modal>
+                }
+
             </div>
         )
     }

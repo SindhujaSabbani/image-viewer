@@ -75,6 +75,7 @@
     justify-content: center;
     margin: auto;
 }
+
 .edit-content {
     display: flex;
     flex-direction: column;
@@ -89,4 +90,31 @@
 .hidden {
     display: flex;
     visibility: hidden;
+}
+
+.image-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-modal-card {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    width: auto;
+    height: auto;
+    justify-content: center;
+}
+
+.image-modal-content {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: auto;
+}
+
+.modal-image {
+    width: 50%;
+    height: 50%;
 }
