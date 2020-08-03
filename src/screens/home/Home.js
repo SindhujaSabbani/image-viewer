@@ -65,7 +65,7 @@ class Home extends Component {
     }
 
     onSearchTextChange = (keyword) => {
-        if (keyword == "") {
+        if (keyword === "") {
             this.setState({post_data: this.state.post_data_orig});
         } else {
             let post_data = [];
@@ -83,7 +83,7 @@ class Home extends Component {
         let post_data = this.state.post_data_orig;
         let i = 0;
         for (; i < post_data.length; i++) {
-            if (post_data[i].id == image_id) {
+            if (post_data[i].id === image_id) {
                 post_data[i].liked = !post_data[i].liked;
                 if (!post_data[i].likes_count) {
                     post_data[i].likes_count = 0;
@@ -103,7 +103,7 @@ class Home extends Component {
         let post_data = this.state.post_data_orig;
         let i = 0;
         for (; i < post_data.length; i++) {
-            if (post_data[i].id == image_id) {
+            if (post_data[i].id === image_id) {
                 let input_text = document.getElementById("imagecomment" + image_id);
                 if (input_text) {
                     post_data[i].comments.push(input_text.value);
@@ -126,7 +126,7 @@ class Home extends Component {
                             <CardHeader
                                 avatar={
                                     <Avatar>
-                                        <img src='batmanprofile.jpg'/>
+                                        <img src='batmanprofile.jpg' alt="batman"/>
                                     </Avatar>
                                 }
                                 title={image.username}
