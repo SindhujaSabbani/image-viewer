@@ -23,6 +23,7 @@ class Header extends Component {
 
     }
 
+    //method to handle when the menu is clicked
     handleOpenMenu = () => {
         this.setState({menuOpen: true})
     }
@@ -30,14 +31,17 @@ class Header extends Component {
     getProfileButton = () => {
         document.getElementById("profile-icon")
     }
+    //method to handle when My Account is clicked
     handleMyAccount = () => {
         this.setState({menuOpen: false})
     }
+    //method to handle when logout is clicked
     handleLogout = () => {
         this.setState({menuOpen: false})
         sessionStorage.removeItem("access-token");
         sessionStorage.removeItem("post_data");
     }
+    //method to redirect to login page if the user is not logged in
     handleLoginStatus = () => {
         if (sessionStorage.getItem("access-token") == null) {
             return <Redirect to="/"/>;
@@ -47,7 +51,7 @@ class Header extends Component {
     handleClose = () => {
         this.setState({menuOpen: false})
     }
-
+    //method called when text is entered in search box
     handleSearchTextChange = (event) => {
         this.props.onSearchTextChange(event.target.value);
     }

@@ -36,7 +36,7 @@ class Home extends Component {
     componentDidMount() {
         fetchPostData(this);
     }
-
+    //method to search an image based on its caption when the user types in the search box
     onSearchTextChange = (keyword) => {
         if (keyword === "") {
             this.setState({post_data: getPostData()});
@@ -52,11 +52,12 @@ class Home extends Component {
             this.setState({post_data: post_data});
         }
     }
-
+    // method to handle the like button
     handleLikeButton = (image_id) => {
         updateLike(this, image_id);
     }
 
+    //method to handle add comment button
     handleAddComment = (image_id) => {
         let input_text = document.getElementById("imagecomment" + image_id);
         updateComment(this, input_text, image_id);
@@ -70,6 +71,7 @@ class Home extends Component {
                 <div className="postlist">
                     {this.state.post_data.map(image => (
 
+                        //using card component for image post
                         <Card className="card">
                             <CardHeader
                                 avatar={
@@ -77,7 +79,9 @@ class Home extends Component {
                                         <img src='batmanprofile.jpg'/>
                                     </Avatar>
                                 }
+                                //displays the username
                                 title={image.username}
+                                //displays the time when the image is posted by user
                                 subheader={image.timestamp}/>
 
                             <CardContent>

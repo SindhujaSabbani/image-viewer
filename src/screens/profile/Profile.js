@@ -49,14 +49,16 @@ class Profile extends Component {
         fetchPostData(this);
     }
 
+    //method tol handle the edit close button
     handleEditClose = () => {
         this.setState({editModalOpen: false})
     }
 
+    //method to handle when the edit button is clicked
     handleEditClick = () => {
         this.setState({editModalOpen: true})
     }
-
+    //method to handle the change of the user fullname
     handleNameChange = (e) => {
         let fullname = e.target.value;
         this.setState({newFullname: fullname});
@@ -66,7 +68,7 @@ class Profile extends Component {
             this.setState({fullnameRequired: "hidden"});
         }
     }
-
+    //method to handle when the update name button is clicked
     handleNameUpdate = () => {
         let fullname = this.state.newFullname;
         if (fullname == "") {
@@ -80,7 +82,7 @@ class Profile extends Component {
             this.handleEditClose();
         }
     }
-
+    //method to handle when the image is clicked
     handleImageClick = (image) => {
 
         this.setState({
@@ -89,6 +91,7 @@ class Profile extends Component {
         });
     }
 
+    //method to handle when the image is closed
     handleImageClose = () => {
         this.setState({
             imageModalId: "",
@@ -96,10 +99,12 @@ class Profile extends Component {
         });
     }
 
+    //method to handle the like button when it is clicked
     handleLikeButton = (image_id) => {
         updateLike(this, image_id);
     }
 
+    //method to handle the add comment button when it is clicked
     handleAddComment = (image_id) => {
         let input_text = document.getElementById("imagecomment" + image_id);
         updateComment(this, input_text, image_id);

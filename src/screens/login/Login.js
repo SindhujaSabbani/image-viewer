@@ -25,10 +25,11 @@ class Login extends Component {
         };
     }
 
+    //method to handle any changes in the username and updates state
     inputUsernameChangeHandler = (e) => {
         this.setState({username: e.target.value})
     }
-
+    //method to handle any changes in the password and updates state
     inputPasswordChangeHandler = (e) => {
         this.setState({password: e.target.value})
     }
@@ -36,6 +37,7 @@ class Login extends Component {
     toHome = () => {
         this.props.history.push('/home');
     }
+    //method to handle when the login button is clicked
     loginClickHandler = () => {
 
         this.state.username === "" ? this.setState({usernameRequired: "dispBlock"}) : this.setState({usernameRequired: "dispNone"});
