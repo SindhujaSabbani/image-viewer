@@ -1,54 +1,59 @@
 //function to fetch the posts data
 function fetchPostData(component) {
     let post_data = sessionStorage.getItem("post_data");
-    console.log(post_data);
-    if (post_data == null) {
-        let media_url = "https://graph.instagram.com/me/media?fields=id,caption&access_token="
-            + sessionStorage.getItem('access-token');
-        let post_url_prefix = "https://graph.instagram.com/";
-        let post_url_postfix = "?fields=id,media_type,media_url,username,timestamp&access_token=" +
-            sessionStorage.getItem('access-token');
-        post_data = []
-        fetch(media_url)
-            .then(res => res.json())
-            .then((result) => {
-                    result.data.forEach(post => {
-                        fetch(post_url_prefix + post.id + post_url_postfix)
-                            .then(res => res.json())
-                            .then((result) => {
-                                let cap_tags = post.caption.split("\n");
-                                result.caption = cap_tags[0];
-                                result.tags = cap_tags[1];
-                                result.comments = [];
-                                result.timestamp = new Date(result.timestamp).toLocaleString();
-                                post_data.push(result);
-                                updatePostData(post_data);
-                                component.setState({
-                                    post_data: post_data,
-                                    posts_count: post_data.length,
+    let access_token = sessionStorage.getItem('access-token');
+
+    if (access_token != null) {
+        if (post_data == null) {
+            let media_url = "https://graph.instagram.com/me/media?fields=id,caption&access_token="
+                + access_token
+            let post_url_prefix = "https://graph.instagram.com/";
+            let post_url_postfix = "?fields=id,media_type,media_url,username,timestamp&access_token=" +
+                access_token
+            post_data = []
+            fetch(media_url)
+                .then(res => res.json())
+                .then((result) => {
+                        result.data.forEach(post => {
+                            fetch(post_url_prefix + post.id + post_url_postfix)
+                                .then(res => res.json())
+                                .then((result) => {
+                                    let cap_tags = post.caption.split("\n");
+                                    result.caption = cap_tags[0];
+                                    result.tags = cap_tags[1];
+                                    result.comments = [];
+                                    result.timestamp = new Date(result.timestamp).toLocaleString();
+                                    post_data.push(result);
+                                    updatePostData(post_data);
+                                    component.setState({
+                                        post_data: post_data,
+                                        posts_count: post_data.length,
+                                    });
                                 });
-                            });
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            );
-    } else {
-        post_data = JSON.parse(post_data)
-        component.setState({
-            post_data: post_data,
-            posts_count: post_data.length,
-        });
+                        });
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                );
+        } else {
+            post_data = JSON.parse(post_data)
+            component.setState({
+                post_data: post_data,
+                posts_count: post_data.length,
+            });
+        }
     }
 }
-//fuction to update the post data
+
+//function to update the post data
 function updatePostData(post_data) {
     sessionStorage.setItem("post_data", JSON.stringify(post_data));
 }
+
 //function to get the post data
 function getPostData() {
     let post_data = sessionStorage.getItem("post_data");
@@ -61,7 +66,7 @@ function getPostData() {
 }
 
 //updating post like
-function  updatePostLike(post) {
+function updatePostLike(post) {
     post.liked = !post.liked;
     if (!post.likes_count) {
         post.likes_count = 0;
